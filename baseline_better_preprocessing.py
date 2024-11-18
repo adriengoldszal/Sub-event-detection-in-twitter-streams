@@ -170,7 +170,13 @@ print(f"Preprocessing tweets...")
 tweet_processing_start = time.time()
 df = batch_preprocess_tweets(df)
 print(f"Preprocessing took {time.time() - tweet_processing_start:.2f} seconds")
-print(df.head(300))
+
+initial_row_count = len(df)
+df = df.dropna()
+dropped_row_count = initial_row_count - len(df)
+print(f"Dropped {dropped_row_count} rows out of {len(df)}")
+
+
 df.to_csv("preprocessed_tweets.csv", index=False)
 
 vector_size = 200  # Adjust based on the chosen GloVe model
