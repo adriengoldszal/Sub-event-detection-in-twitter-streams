@@ -4,3 +4,7 @@ numpy
 pandas
 scikit-learn
 tqdm
+transformers
+torch
+ipykernel
+ipywidgets
