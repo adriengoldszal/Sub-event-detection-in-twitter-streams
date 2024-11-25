@@ -8,3 +8,4 @@ transformers
 torch
 ipykernel
 ipywidgets
+xgboost
