@@ -40,35 +40,52 @@ class MatchDataset(Dataset):
         return self.sequences[idx], self.labels[idx]
 
 class TweetAVGChronologicalLSTM(nn.Module):
-    def __init__(self, input_dim=200, hidden_dim=128, num_layers=2, num_classes=2, dropout=0.3):
+    def __init__(self, input_dim=200, hidden_dim=32, num_classes=2):  # hidden_dim=32 as per config
         super(TweetAVGChronologicalLSTM, self).__init__()
         
-        # Chronological LSTM layer
+        # Batch normalization (batch_norm = True)
+        self.batch_norm = nn.BatchNorm1d(input_dim)
+        
+        # Single layer LSTM (num_lstm_layers = 1)
         self.lstm = nn.LSTM(
             input_size=input_dim,
             hidden_size=hidden_dim,
-            num_layers=num_layers,
-            batch_first=True,
-            dropout=dropout if num_layers > 1 else 0
+            num_layers=1,  # as per config
+            batch_first=True
         )
         
+        # Dropouts matching their config
+        self.dropout_embedding = nn.Dropout(0.1)  # dropout_embedding = 0.1
+        self.dropout_lstm_out = nn.Dropout(0.1)   # dropout_lstm2_output = 0.1
+        
         # Classification head
-        self.classifier = nn.Sequential(
-            nn.Linear(hidden_dim, hidden_dim // 2),
-            nn.ReLU(),
-            nn.Dropout(dropout),
-            nn.Linear(hidden_dim // 2, num_classes)
-        )
+        self.hidden2tag = nn.Linear(hidden_dim, num_classes)
     
     def forward(self, x):
-        # x shape: (batch_size, sequence_length, input_dim)
+        # Input is already averaged embeddings
+        batch_size, seq_len, feat_dim = x.size()
+        
+        # Apply embedding dropout
+        x = self.dropout_embedding(x)
+        
+        # Batch norm
+        if seq_len > 1:
+            x = x.view(-1, feat_dim)
+            x = self.batch_norm(x)
+            x = x.view(batch_size, seq_len, feat_dim)
+        
+        # LSTM
         lstm_out, _ = self.lstm(x)
-        # Use the last time step output for classification
-        last_time_step = lstm_out[:, -1, :]
-        logits = self.classifier(last_time_step)
-        return logits
+        
+        # LSTM output dropout
+        lstm_out = self.dropout_lstm_out(lstm_out)
+        
+        # Get predictions for each timestep
+        tag_space = self.hidden2tag(lstm_out[:, -1, :])
+        
+        return tag_space
 
-def train_model(model, train_loader, val_loader, num_epochs=100, learning_rate=0.001):
+def train_model(model, train_loader, val_loader, num_epochs=150, learning_rate=0.1):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = model.to(device)
     
@@ -160,8 +177,7 @@ def main():
     # Create model
     model = TweetAVGChronologicalLSTM(
         input_dim=200,  # Your GloVe embedding dimension
-        hidden_dim=128,
-        num_layers=2,
+        hidden_dim=32,
         num_classes=2  # Binary classification
     )
     

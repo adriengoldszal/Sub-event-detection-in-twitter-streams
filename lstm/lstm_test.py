@@ -87,8 +87,7 @@ def main():
     # Load your trained model
     model = TweetAVGChronologicalLSTM(
         input_dim=200,
-        hidden_dim=128,
-        num_layers=2,
+        hidden_dim=32,
         num_classes=2
     )
     
@@ -99,8 +98,7 @@ def main():
     predictions = predict_and_export(
         model=model,
         test_file_path='period_features_test_glove.csv',
-        output_file_path='predictions.csv',
-        sequence_length=5
+        output_file_path='lstm_like_paper.csv'
     )
     
     print("Predictions have been saved to predictions.csv")
