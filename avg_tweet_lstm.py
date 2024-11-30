@@ -68,7 +68,7 @@ class TweetAVGChronologicalLSTM(nn.Module):
         logits = self.classifier(last_time_step)
         return logits
 
-def train_model(model, train_loader, val_loader, num_epochs=30, learning_rate=0.001):
+def train_model(model, train_loader, val_loader, num_epochs=100, learning_rate=0.001):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = model.to(device)
     
