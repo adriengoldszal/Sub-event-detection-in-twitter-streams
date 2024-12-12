@@ -9,7 +9,7 @@ from formatting_summary import *
 import time
 
 ### Setting up DSPy
-openai.api_key = "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"
+openai.api_key = "INSERT_API_KEY_HERE"
 lm=dspy.OpenAI(model="gpt-4o-mini")
 dspy.settings.configure(lm=lm)
 print(lm("Hello, world!"))
