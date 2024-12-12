@@ -1,6 +1,6 @@
 # INF554 Team Petit Pois
 
-INF554 Machine and Deep Learning Data Challenge : Sub-event detection in twitter streams. 
+INF554 Machine and Deep Learning Data Challenge : Sub-event detection in twitter streams. Please see the [report](Petit_Pois_Data_Challenge.pdf) for more details.
 
 # Installation Instructions
 
