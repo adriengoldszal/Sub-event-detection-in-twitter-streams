@@ -1,7 +1,7 @@
 # INF554 Team Petit Pois
-INF554 Machine and Deep Learning Data Challenge 
 
-The training and evaluation data should be placed in 
+INF554 Machine and Deep Learning Data Challenge : Sub-event detection in twitter streams. 
+
 # Installation Instructions
 
 1) Download and unzip the challenge_data folder from kaggle at the root, so it creates a `challenge_data` folder with the necessary train and test tweets, we should then have directories like this : `/challenge_data/train_tweets` and `challenge_data/eval_tweets`.
