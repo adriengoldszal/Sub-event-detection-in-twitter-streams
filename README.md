@@ -25,6 +25,10 @@ This will output the period features for three different models (GloVe-50, GloVe
 
 ## DSPy
 
+### Disclaimer
+
+To run, you need an OpenAI API Key. It is to be inserted at the top of the `clean_dspy.py` file. 
+
 ### Creating the summaries 
 
 This code has been taken from the great work by Polykarpos Meladianos, Christos Xypolopoulos, Giannis Nikolentzos, and Michalis Vazirgiannis in their paper [An Optimization Approach for Sub-event
@@ -35,4 +39,6 @@ Detection and Summarization in Twitter](https://www.lix.polytechnique.fr/~nikole
 2) For each match to be summarized, call in the following format `python optimization-sub-event-detection\main.py .\challenge_data\eval_tweets\converted_files\converted_GreeceIvoryCoast44.csv --output .\summaries --v`  
 The summaries can all be found already in the `summaries` folder. 
 
-3) Run `clean_dspy.py` which relies on the `formatting_summary.py` file located in the work folder as well as the already converted summaries (the `converted_MATCHNAME.txt` files) located in the `./summaries` folder. This will print on the terminal results for the trained module on the training data and testing data selected at random from the known data and it will also output in `./predictions` the predictions for the evaluation set.
+### Running the DSPy framework
+
+Run `clean_dspy.py` which relies on the `formatting_summary.py` file located in the work folder as well as the already converted summaries (the `converted_MATCHNAME.txt` files) located in the `./summaries` folder. This will print on the terminal results for the trained module on the training data and testing data selected at random from the known data and it will also output in `./predictions` the predictions for the evaluation set.
