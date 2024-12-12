@@ -29,7 +29,7 @@ predict = DetectEventImpl()
 
 available_matches = ["ArgentinaGermanyFinal77","AustraliaNetherlands29","AustraliaSpain34","BelgiumSouthKorea59","CameroonBrazil36","FranceGermany70","FranceNigeria66","GermanyAlgeria67","GermanyBrazil74","GermanyUSA57","HondurasSwitzerland54","MexicoCroatia37","NetherlandsChile35","PortugalGhana58","USASlovenia2010"]
 n_total_matches = len(available_matches)
-n_training_matches = int(n_total_matches*0.34)
+n_training_matches = 4
 n_testing_matches = 3
 np.random.seed(42)
 available_matches = np.random.permutation(available_matches)
